@@ -12,28 +12,29 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
   if (info.menuItemId === "tweetCreator") {
     let selectedText = info.selectionText;
 
-    // Call to Palm2 API for text summarization
+    // Call to GPT API for text generation
     console.log(selectedText);
-    fetch("https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText?key=AIzaSyDziGoZ8H9asRgWUUHiEfcitZYeHWB5iVQ", {
+    fetch("https://api.openai.com/v1/engines/text-davinci-003/completions", {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer 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' // Replace YOUR_API_KEY with your actual API key
       },
-      //body: JSON.stringify({ "prompt": { "text": selectedText } })
-      //body: JSON.stringify({ "prompt": "Crea un poema sobre Java Script"})
-      //body: JSON.stringify({ "prompt": { "text": "create a poem about Java Script" } })
-      body: JSON.stringify({ "prompt": { "text": selectedText+" Please, summarize this text as a tweet with hashtags and emojis" } })
+      body: JSON.stringify({
+        prompt: "Create a tweet about " + selectedText,
+        max_tokens: 50
+      })
     })
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        console.log(data.candidates[0].output);
-        // Store summarized text in local storage
-        chrome.storage.local.set({ summarizedText: data.candidates[0].output });
+        console.log(data.choices[0].text);
+        // Store generated tweet in local storage
+        chrome.storage.local.set({ summarizedText: data.choices[0].text });
       })
       .catch(error => {
         console.error('Error:', error);
-        chrome.storage.local.set({ summarizedText: "PALM 2 CANT READ THE MESSAGE. INFORMATION ABOUT THE ERROR: " + error.message });
+        chrome.storage.local.set({ summarizedText: "GPT API ERROR: " + error.message });
       });
   }
 });

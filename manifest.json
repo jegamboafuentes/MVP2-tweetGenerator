@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Palm2 Tweet creator",
+  "name": "Tweet creator",
   "version": "1.0",
   "description": "Summarize any selected text as a tweet",
   "permissions": [
