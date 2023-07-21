@@ -1,4 +1,3 @@
-
 chrome.runtime.onInstalled.addListener(function () {
   // Create context menu
   chrome.contextMenus.create({
@@ -18,11 +17,11 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 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' // Replace YOUR_API_KEY with your actual API key
+        'Authorization': 'Bearer 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' // Replace YOUR_API_KEY with your actual API key
       },
       body: JSON.stringify({
-        prompt: "Create a tweet about " + selectedText,
-        max_tokens: 50
+        prompt: selectedText + " Create a tweet about that text,  include emojis and hashtags, text limit 280 characters",
+        max_tokens: 1000
       })
     })
       .then(response => response.json())
