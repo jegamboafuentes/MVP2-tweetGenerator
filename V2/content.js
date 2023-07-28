@@ -3,7 +3,7 @@
  * ExtPay is made available in this script through the manifest.json
  * "content_scripts" -> "js" array.
  */
-var extpay = ExtPay('tier2automaticnfttraitgenerator'); 
+var extpay = ExtPay('test3'); 
 
 // Add a "subscribe to Sample Extension!" button on every webpage.
 var button = document.createElement('button');

@@ -2,7 +2,7 @@
 // registered on ExtensionPay.com to test payments. You may need to
 // uninstall and reinstall the extension to make it work.
 // Don't forget to change the ID in background.js too!
-const extpay = ExtPay('test2')
+const extpay = ExtPay('test3')
 
 document.querySelector('#pay-now').addEventListener('click', function () {
     extpay.openPaymentPage();
@@ -15,10 +15,12 @@ extpay.getUser().then(user => {
     const now = new Date();
     //const sevenDays = 1000*60*60*24*7 // in milliseconds
     //const thirtySeconds = 30 * 1000  //# in milliseconds
-    const elevenMinutes = 11 * 60 * 1000
+    //const elevenMinutes = 11 * 60 * 1000
     //const threeMinutes = 3 * 60 * 1000
-    if (user.trialStartedAt && (now - user.trialStartedAt) < elevenMinutes) {
-        const remainingTimeInMinutes = (elevenMinutes - (now - user.trialStartedAt)) / 60000
+    const fourMinutes = 4 * 60 * 1000
+    
+    if (user.trialStartedAt && (now - user.trialStartedAt) < fourMinutes) {
+        const remainingTimeInMinutes = (fourMinutes - (now - user.trialStartedAt)) / 60000
         document.querySelector('#user-message').innerHTML = `trial active, remaining time ⌛ ${remainingTimeInMinutes.toFixed(2)} minutes`
         document.querySelector('button').remove()
         // user's trial is active
@@ -39,4 +41,22 @@ extpay.getUser().then(user => {
 })
 
 // extpay.onPaid(function() { console.log('popup paid')});
- 
+document.addEventListener('DOMContentLoaded', () => {
+    // Fetch summarized text from local storage
+    chrome.storage.local.get(['summarizedText'], function (result) {
+        document.getElementById('summary').innerText = result.summarizedText;
+    });
+
+    // Add event listener for tweet button
+    document.getElementById('tweet').addEventListener('click', () => {
+        let tweetText = document.getElementById('summary').innerText;
+        let tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+        window.open(tweetUrl, "_blank");
+    });
+
+    // Listen for messages from the background script
+    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+        // Update the popup's content
+        document.getElementById('summary').innerText = request.summarizedText;
+    });
+});
