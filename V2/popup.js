@@ -31,9 +31,11 @@ extpay.getUser().then(user => {
             document.querySelector('button').remove()
         } else if (user.trialStartedAt == null) {
             document.querySelector('#user-message').innerHTML = 'User has not started a trial yet.'
+            document.querySelector('#tweet').remove()
         }
         else {
             document.querySelector('#user-message').innerHTML = 'Trial ended 🫥, please pay to continue using this extension.'
+            document.querySelector('#tweet').remove()
         }
     }
 }).catch(err => {
