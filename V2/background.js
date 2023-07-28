@@ -36,7 +36,7 @@ chrome.runtime.onInstalled.addListener(function () {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer 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' // Replace YOUR_API_KEY with your actual API key
+          'Authorization': 'Bearer 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' // Replace YOUR_API_KEY with your actual API key
         },
         body: JSON.stringify({
           prompt: selectedText + " Create a tweet about that text,  include emojis and hashtags, text limit 280 characters",
