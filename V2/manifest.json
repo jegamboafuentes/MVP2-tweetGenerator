@@ -1,0 +1,39 @@
+{
+    "manifest_version": 3,
+    "name": "Metaverse Professional Extension Template",
+    "short_name": "metaverseprofessional_extension_template",
+    "version": "1.0",
+    "author": "Metaverse Professional",
+    "description": "Add the description of your extension here.",
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://extensionpay.com/*"],
+            "js": ["ExtPay.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["http://*/", "https://*/"],
+            "js": ["ExtPay.js", "content.js"]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+          "16": "img/icon16.png",
+          "48": "img/icon48.png",
+          "128": "img/icon128.png"
+        }
+      },
+      "icons": {
+        "16": "img/icon16.png",
+        "48": "img/icon48.png",
+        "128": "img/icon128.png"
+      },
+    "permissions": [
+        "storage"
+    ]
+}
+
