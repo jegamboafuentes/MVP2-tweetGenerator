@@ -7,7 +7,7 @@ var extpay = ExtPay('test3');
 
 // Add a "subscribe to Sample Extension!" button on every webpage.
 var button = document.createElement('button');
-button.innerText = 'Pay for ExtensionPay Sample Extension!'
+button.innerText = 'Gus estuvo aqui'
 button.addEventListener('click', function(evt) {
 	extpay.openPaymentPage();
 }, true)
