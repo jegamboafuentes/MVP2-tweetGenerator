@@ -17,7 +17,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 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' // Replace YOUR_API_KEY with your actual API key
+        'Authorization': 'Bearer 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' // Replace YOUR_API_KEY with your actual API key
       },
       body: JSON.stringify({
         prompt: selectedText + " Create a tweet about that text,  include emojis and hashtags, text limit 280 characters",
