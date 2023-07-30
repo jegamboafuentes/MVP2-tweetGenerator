@@ -2,7 +2,7 @@
 // registered on ExtensionPay.com to test payments. You may need to
 // uninstall and reinstall the extension to make it work.
 // Don't forget to change the ID in background.js too!
-const extpay = ExtPay('test3')
+const extpay = ExtPay('tweet-creator')
 
 document.querySelector('#pay-now').addEventListener('click', function () {
     extpay.openPaymentPage();
@@ -13,14 +13,14 @@ extpay.getUser().then(user => {
         document.querySelector('#pay-now').addEventListener('click', extpay.openTrialPage())
     }
     const now = new Date();
-    //const sevenDays = 1000*60*60*24*7 // in milliseconds
+    const sevenDays = 1000 * 60 * 60 * 24 * 7 // in milliseconds
     //const thirtySeconds = 30 * 1000  //# in milliseconds
     //const elevenMinutes = 11 * 60 * 1000
     //const threeMinutes = 3 * 60 * 1000
-    const fourMinutes = 4 * 60 * 1000
-    
-    if (user.trialStartedAt && (now - user.trialStartedAt) < fourMinutes) {
-        const remainingTimeInMinutes = (fourMinutes - (now - user.trialStartedAt)) / 60000
+    //const fourMinutes = 4 * 60 * 1000
+
+    if (user.trialStartedAt && (now - user.trialStartedAt) < sevenDays) {
+        const remainingTimeInMinutes = (sevenDays - (now - user.trialStartedAt)) / 60000
         document.querySelector('#user-message').innerHTML = `trial active, remaining time ⌛ ${remainingTimeInMinutes.toFixed(2)} minutes`
         document.querySelector('button').remove()
         // user's trial is active
@@ -31,11 +31,15 @@ extpay.getUser().then(user => {
             document.querySelector('button').remove()
         } else if (user.trialStartedAt == null) {
             document.querySelector('#user-message').innerHTML = 'User has not started a trial yet.'
-            document.querySelector('#tweet').remove()
+            //document.querySelector('#tweet').remove()
+            const Tweetbutton = document.querySelector('#tweet');
+            Tweetbutton.disabled = true;
         }
         else {
             document.querySelector('#user-message').innerHTML = 'Trial ended 🫥, please pay to continue using this extension.'
-            document.querySelector('#tweet').remove()
+            //document.querySelector('#tweet').remove()
+            const Tweetbutton = document.querySelector('#tweet');
+            Tweetbutton.disabled = true;
         }
     }
 }).catch(err => {
@@ -61,4 +65,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update the popup's content
         document.getElementById('summary').innerText = request.summarizedText;
     });
+});
+
+//7/29/23
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+    for (var key in changes) {
+        var storageChange = changes[key];
+        if (key === 'summarizedText') {
+            document.getElementById('summary').innerText = storageChange.newValue;
+        }
+    }
 });

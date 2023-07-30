@@ -3,13 +3,13 @@
  * ExtPay is made available in this script through the manifest.json
  * "content_scripts" -> "js" array.
  */
-var extpay = ExtPay('test3'); 
+var extpay = ExtPay('tweet-creator'); 
 
 // Add a "subscribe to Sample Extension!" button on every webpage.
 var button = document.createElement('button');
-button.innerText = 'Gus estuvo aqui'
+button.innerText = 'Tweet extension!'
 button.addEventListener('click', function(evt) {
 	extpay.openPaymentPage();
 }, true)
 
-document.body.prepend(button);
+//document.body.prepend(button);
